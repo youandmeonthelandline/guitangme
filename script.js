@@ -18,17 +18,6 @@ const WISHES = [
   "Mẹ là số 1😳",
 ];
 
-const GALLERY_ITEMS = [
-  ...Array.from({ length: 20 }, (_, i) => ({
-    type: "image",
-    src: `assets/images/${i + 1}.jpg`,
-  })),
-  ...Array.from({ length: 10 }, (_, i) => ({
-    type: "video",
-    src: `assets/videos/${i + 1}.mp4`,
-  })),
-];
-
 const MEMES = [
   "Mẹ đọc tới đây mà không cười là con buồn đó nha 😼",
   "Con: luôn bướng hong chịu nghe lời. Cũng là con: thức đêm làm web 😭💗",
@@ -56,7 +45,6 @@ const bgMusic = $("bgMusic");
 const musicBtn = $("musicBtn");
 
 const marqueeTrack = $("marqueeTrack");
-const gallery = $("gallery");
 const memeList = $("memeList");
 
 const lightbox = $("lightbox");
@@ -65,6 +53,14 @@ const lightboxContent = $("lightboxContent");
 
 const wishBtn = $("wishBtn");
 const wishText = $("wishText");
+
+// film + video
+const photoFilm = document.getElementById("photoFilm");
+const videoRow = document.getElementById("videoRow");
+
+// tách danh sách
+const PHOTOS = Array.from({ length: 23 }, (_, i) => `assets/images/${i + 1}.jpg`);
+const VIDEOS = Array.from({ length: 10 }, (_, i) => `assets/videos/${i + 1}.mp4`);
 
 // ---------- Helpers ----------
 function stripTime(d) {
@@ -117,23 +113,8 @@ musicBtn?.addEventListener("click", async () => {
 // ---------- Marquee ----------
 function renderMarquee() {
   const items = [...WISHES, ...WISHES];
-  marqueeTrack.innerHTML = items
-    .map((t) => `<div class="pill">💗 ${t}</div>`)
-    .join("");
+  marqueeTrack.innerHTML = items.map((t) => `<div class="pill">💗 ${t}</div>`).join("");
 }
-
-const photoFilm = document.getElementById("photoFilm");
-const videoRow = document.getElementById("videoRow");
-
-// tách danh sách
-const PHOTOS = Array.from(
-  { length: 23 },
-  (_, i) => `assets/images/${i + 1}.jpg`
-);
-const VIDEOS = Array.from(
-  { length: 10 },
-  (_, i) => `assets/videos/${i + 1}.mp4`
-);
 
 // ===== ẢNH: film cuốn + auto 3s/ảnh =====
 let filmIndex = 0;
@@ -148,7 +129,7 @@ function renderPhotoFilm() {
     .map(
       (src, idx) => `
     <div class="film-item" data-type="image" data-src="${src}">
-      <img loading="lazy" src="${src}" alt="Ảnh ${idx + 1}">
+      <img loading="lazy" decoding="async" src="${src}" alt="Ảnh ${idx + 1}">
     </div>
   `
     )
@@ -165,7 +146,6 @@ function renderPhotoFilm() {
 }
 
 function startFilmAuto() {
-  // auto dịch theo từng ảnh: 3s/1 ảnh
   stopFilmAuto();
 
   const gap = 12;
@@ -200,14 +180,18 @@ function stopFilmAuto() {
   }
 }
 
-// ===== VIDEO: hàng ngang, lướt & bấm xem =====
+// ===== VIDEO: hàng ngang, lướt & bấm xem + poster =====
 function renderVideoRow() {
   if (!videoRow) return;
 
   videoRow.innerHTML = VIDEOS.map(
     (src, i) => `
     <div class="album-item is-visible" data-type="video" data-src="${src}">
-      <video class="album-thumb" src="${src}" muted playsinline preload="metadata"></video>
+      <video class="album-thumb"
+        src="${src}"
+        poster="assets/videos/thumbs/${i + 1}.jpg"
+        muted playsinline preload="metadata">
+      </video>
     </div>
   `
   ).join("");
@@ -222,10 +206,11 @@ function renderVideoRow() {
 // ---------- Lightbox ----------
 function openLightbox(item) {
   lightbox.classList.remove("hidden");
-  if (item.type === "image")
+  if (item.type === "image") {
     lightboxContent.innerHTML = `<img src="${item.src}" alt="Ảnh" />`;
-  else
+  } else {
     lightboxContent.innerHTML = `<video src="${item.src}" controls autoplay playsinline></video>`;
+  }
 }
 function closeLb() {
   lightbox.classList.add("hidden");
@@ -241,9 +226,7 @@ document.addEventListener("keydown", (e) => {
 
 // ---------- Memes ----------
 function renderMemes() {
-  memeList.innerHTML = MEMES.map((t) => `<div class="meme">✨ ${t}</div>`).join(
-    ""
-  );
+  memeList.innerHTML = MEMES.map((t) => `<div class="meme">✨ ${t}</div>`).join("");
 }
 
 // ---------- Counters ----------
@@ -252,22 +235,10 @@ function renderCounters() {
   const birthMe = new Date(FAMILY.me.birthday);
 
   $("daysWithMom").textContent = `${daysSince(birthMe, now)}`;
-  $("bdayMe").textContent = `${daysBetween(
-    now,
-    nextOccurrence(FAMILY.me.birthday)
-  )}`;
-  $("bdayMom").textContent = `${daysBetween(
-    now,
-    nextOccurrence(FAMILY.mom.birthday)
-  )}`;
-  $("bdaySis").textContent = `${daysBetween(
-    now,
-    nextOccurrence(FAMILY.sis.birthday)
-  )}`;
-  $("bdayBro").textContent = `${daysBetween(
-    now,
-    nextOccurrence(FAMILY.bro.birthday)
-  )}`;
+  $("bdayMe").textContent = `${daysBetween(now, nextOccurrence(FAMILY.me.birthday))}`;
+  $("bdayMom").textContent = `${daysBetween(now, nextOccurrence(FAMILY.mom.birthday))}`;
+  $("bdaySis").textContent = `${daysBetween(now, nextOccurrence(FAMILY.sis.birthday))}`;
+  $("bdayBro").textContent = `${daysBetween(now, nextOccurrence(FAMILY.bro.birthday))}`;
 
   $("gradCountdown").textContent = FAMILY.gradDate
     ? `${daysBetween(now, new Date(FAMILY.gradDate))}`
@@ -280,7 +251,7 @@ async function typeWriteParagraphs(paras, el) {
   if (typing) return;
   typing = true;
 
-  el.innerHTML = ""; // clear
+  el.innerHTML = "";
   const cursor = document.createElement("span");
   cursor.className = "cursor";
 
@@ -292,11 +263,10 @@ async function typeWriteParagraphs(paras, el) {
     for (let i = 0; i < p.length; i++) {
       line.textContent += p[i];
       el.appendChild(cursor);
-      await new Promise((r) => setTimeout(r, 18)); // tốc độ gõ
+      await new Promise((r) => setTimeout(r, 18));
     }
   }
 
-  // done: giữ cursor nhấp nháy
   el.appendChild(cursor);
   typing = false;
 }
@@ -330,19 +300,19 @@ function mountFXCanvas() {
   resize();
   window.addEventListener("resize", resize);
 
-  const dots = []; // ⭐ dấu chấm lấp lánh
-  const petals = []; // 🌸 cánh hoa
+  const dots = [];
+  const petals = [];
 
   const rand = (a, b) => a + Math.random() * (b - a);
 
-  const DOT_COUNT = 75; // nhiều nhưng nhỏ
-  const PETAL_COUNT = 12; // ít để không rối
+  const DOT_COUNT = 75;
+  const PETAL_COUNT = 12;
 
   function spawnDot() {
     dots.push({
       x: rand(0, w),
       y: rand(-h, h),
-      r: rand(0.8, 1.9), // nhỏ xíu như dấu chấm
+      r: rand(0.8, 1.9),
       vy: rand(0.15, 0.45),
       tw: rand(0.01, 0.03),
       a: rand(0.2, 0.7),
@@ -354,7 +324,7 @@ function mountFXCanvas() {
     petals.push({
       x: rand(-40, w + 40),
       y: rand(-80, -20),
-      r: rand(3.2, 6.8), // to nhỏ tự nhiên
+      r: rand(3.2, 6.8),
       rot: rand(0, Math.PI * 2),
       rotSpd: rand(-0.015, 0.015),
       vx: rand(-0.12, 0.12),
@@ -372,13 +342,11 @@ function mountFXCanvas() {
     const twinkle = 0.35 + 0.65 * Math.sin(t * d.tw);
     const alpha = d.a * twinkle;
 
-    // dot
     ctx.beginPath();
     ctx.fillStyle = `rgba(${d.hue},${alpha})`;
     ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
     ctx.fill();
 
-    // glow nhẹ
     ctx.beginPath();
     ctx.fillStyle = `rgba(${d.hue},${alpha * 0.25})`;
     ctx.arc(d.x, d.y, d.r * 4, 0, Math.PI * 2);
@@ -390,7 +358,7 @@ function mountFXCanvas() {
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rot);
 
-    ctx.globalAlpha = 0.55; // giảm để không che chữ
+    ctx.globalAlpha = 0.55;
     const grad = ctx.createLinearGradient(0, -p.r * 3, 0, p.r * 3);
     grad.addColorStop(0, "rgba(255,155,208,0.85)");
     grad.addColorStop(1, "rgba(255,79,163,0.35)");
@@ -407,7 +375,6 @@ function mountFXCanvas() {
     ctx.clearRect(0, 0, w, h);
     const t = Date.now();
 
-    // sparkle dots
     for (let i = dots.length - 1; i >= 0; i--) {
       const d = dots[i];
       d.y += d.vy;
@@ -419,7 +386,6 @@ function mountFXCanvas() {
       }
     }
 
-    // petals
     for (let i = petals.length - 1; i >= 0; i--) {
       const p = petals[i];
       p.t++;
@@ -449,6 +415,8 @@ renderMemes();
 renderCounters();
 mountFXCanvas();
 setInterval(renderCounters, 60 * 1000);
+
+
 
 
 
