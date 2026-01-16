@@ -127,7 +127,7 @@ const videoRow = document.getElementById("videoRow");
 
 // tách danh sách
 const PHOTOS = Array.from(
-  { length: 2323 },
+  { length: 23 },
   (_, i) => `assets/images/${i + 1}.jpg`
 );
 const VIDEOS = Array.from(
@@ -449,6 +449,7 @@ renderMemes();
 renderCounters();
 mountFXCanvas();
 setInterval(renderCounters, 60 * 1000);
+
 
 
 
