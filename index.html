@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bức thư dành riêng cho Mẹ 💗</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Marck+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- hiệu ứng tim -->
+    <div id="hearts"></div>
+
+    <!-- HERO -->
+    <header class="hero" id="hero">
+      <div class="hero-card">
+        <div class="badge">💌 Bức thư dành riêng cho Mẹ</div>
+
+        <h1>Gửi Mẹ của con</h1>
+        <p class="sub">
+          Con không giỏi nói lời tình cảm…<br />
+          nên con viết tất cả ở đây.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn primary" id="openLetterBtn" type="button">
+            Mẹ bấm vào đây nhé 💗
+          </button>
+        </div>
+
+        <p class="note">(Mẹ kéo xuống xem từng phần nha 🫶)</p>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main id="main" class="hidden">
+      <!-- LETTER -->
+      <section class="section">
+        <div class="section-title">
+          <h2>💌 Một bức thư nhỏ</h2>
+          <p>Con viết cho mẹ bằng tất cả sự biết ơn.</p>
+        </div>
+
+        <div class="paper">
+          <div class="paper-head">
+            <span>Gửi mẹ,</span>
+            <span id="today"></span>
+          </div>
+
+          <div class="handwrite" id="typed"></div>
+
+          <div class="sign">
+            <p>Con của mẹ,</p>
+            <p class="sig">Ngân Hoàng</p>
+            <p class="mini">Sinh ngày 19/02/2008</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIMELINE -->
+      <section class="section alt">
+        <div class="section-title">
+          <h2>🕰️ Hành trình của Mẹ & Con</h2>
+          <p>Mỗi mốc thời gian là một điều con luôn nhớ.</p>
+        </div>
+
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <!-- GALLERY -->
+      <section class="section">
+        <div class="section-title">
+          <h2>📸 Album kỷ niệm</h2>
+          <p>Con sẽ thay ảnh thật sau (giờ là khung để mẹ xem bố cục trước).</p>
+        </div>
+
+        <div class="grid" id="gallery"></div>
+
+        <p class="hint">
+          ✨ Khi có ảnh, em chỉ cần gửi ảnh cho anh hoặc thay vào folder
+          <b>assets/photos</b>.
+        </p>
+      </section>
+
+      <!-- MAJOR -->
+      <section class="section alt">
+        <div class="section-title">
+          <h2>🎓 Nguyện vọng của con</h2>
+          <p>Con muốn mẹ yên tâm rằng con đang nghiêm túc.</p>
+        </div>
+
+        <div class="card">
+          <h3>Công nghệ Điện tử – Viễn thông (Đà Lạt)</h3>
+
+          <p class="text">
+            Nguyện vọng của em là theo học ngành
+            <b>Công nghệ Điện tử – Viễn thông</b> tại trường ở <b>Đà Lạt</b>. Em
+            chọn ngành này vì yêu thích công nghệ và mong muốn được học một lĩnh
+            vực có tính ứng dụng cao. Mục tiêu nghề nghiệp của em là trở thành
+            <b>kỹ sư IoT (Internet of Things)</b>, phát triển các thiết bị thông
+            minh và hệ thống tự động hóa phục vụ đời sống. Em xác định đây là
+            lựa chọn nghiêm túc, vì vậy em sẽ học tập kỷ luật, rèn tiếng Anh và
+            kỹ năng thực hành để có thể đi đúng hướng và tạo ra giá trị trong
+            tương lai.
+          </p>
+
+          <div class="pills">
+            <span class="pill">📡 Điện tử</span>
+            <span class="pill">🌐 Viễn thông</span>
+            <span class="pill">🤖 IoT</span>
+            <span class="pill">🧠 Tự động hóa</span>
+            <span class="pill">🇬🇧 Tiếng Anh</span>
+            <span class="pill">📚 Kỷ luật</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- COUNTDOWN -->
+      <section class="section">
+        <div class="section-title">
+          <h2>⏳ Đếm ngược kỳ thi tốt nghiệp</h2>
+          <p>Mỗi ngày con sẽ cố gắng hơn một chút.</p>
+        </div>
+
+        <div class="card center">
+          <div class="row">
+            <label for="examDate"><b>📅 Ngày thi:</b></label>
+            <input type="date" id="examDate" />
+            <button class="btn small" id="saveDateBtn" type="button">
+              Lưu
+            </button>
+          </div>
+
+          <div class="countdown" id="countdown"></div>
+
+          <div class="progressBox">
+            <div class="progressTop">
+              <span>Tiến độ</span>
+              <span id="percent">0%</span>
+            </div>
+            <div class="bar">
+              <div class="fill" id="fill"></div>
+            </div>
+            <p class="mini2">Hôm nay con đã cố gắng thêm 1 chút rồi 💗</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECRET -->
+      <section class="section alt">
+        <div class="section-title">
+          <h2>💗 Một điều con giấu ở đây</h2>
+          <p>Chỉ dành riêng cho mẹ.</p>
+        </div>
+
+        <div class="center">
+          <button class="btn primary" id="openSecretBtn" type="button">
+            Mẹ bấm vào đây…
+          </button>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <p>Con cảm ơn mẹ vì đã là mẹ của con 🌷</p>
+        <p class="mini">Trang web này được làm bởi: Ngân Hoàng 💗</p>
+      </footer>
+    </main>
+
+    <!-- MODAL -->
+    <div class="modal hidden" id="modal">
+      <div class="modal-card" role="dialog" aria-modal="true">
+        <button class="x" id="closeModalBtn" type="button">✕</button>
+        <h3>Mẹ ơi…</h3>
+        <p>
+          Con thật sự cảm ơn mẹ. Nếu mẹ mệt quá, mẹ dựa vào con một chút cũng
+          được. Con sẽ cố gắng để mẹ yên tâm hơn mỗi ngày.
+        </p>
+        <p class="love">Con thương mẹ nhiều 💗</p>
+        <p class="tiny">(Bấm ngoài khung / bấm X / nhấn ESC để tắt)</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
