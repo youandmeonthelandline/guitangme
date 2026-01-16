@@ -1,240 +1,453 @@
-// ===== Helper =====
+// ================== SETTINGS ==================
+const FAMILY = {
+  me: { name: "Em Bí", birthday: "2008-02-19" },
+  mom: { name: "Mẹ", birthday: "1985-07-09" },
+  sis: { name: "Chị", birthday: "2005-05-13" },
+  bro: { name: "Em trai", birthday: "2010-01-12" },
+  gradDate: null,
+};
+
+const WISHES = [
+  "Con cảm ơn mẹ vì luôn lo cho con 💗",
+  "Chúc mẹ luôn khỏe mạnh và bình an ✨",
+  "Mẹ đừng mệt quá nữa nha 🥺",
+  "Con không nói nhiều nhưng con biết ơn mẹ lắm 😼",
+  "Nhà mình sẽ ổn màaaa 💗",
+  "Mẹ cứ yên tâm, con đang cố gắng nè",
+  "Cười lên nha mẹ 😆",
+  "Mẹ là số 1 (con ngại nói trực tiếp) 😳",
+];
+
+const GALLERY_ITEMS = [
+  ...Array.from({ length: 20 }, (_, i) => ({
+    type: "image",
+    src: `assets/images/${i + 1}.jpg`,
+  })),
+  ...Array.from({ length: 10 }, (_, i) => ({
+    type: "video",
+    src: `assets/videos/${i + 1}.mp4`,
+  })),
+];
+
+const MEMES = [
+  "Mẹ đọc tới đây mà không cười là con buồn đó nha 😼",
+  "Con: không giỏi nói tình cảm. Cũng là con: làm web nguyên cái 😭💗",
+  "Mẹ mà khen đẹp là con sẽ… ngại đó 😳",
+  "Nếu mẹ thấy dễ thương thì đúng rồi 😌",
+];
+
+// Text nguyện vọng (typewriter)
+const WISH_PARAS = [
+  "Con đang nghiêm túc nghĩ về tương lai rồi nha (đừng bất ngờ).",
+  "Nguyện vọng của con là theo học ngành Công nghệ Điện tử – Viễn thông tại trường ở Đà Lạt.",
+  "Con thích công nghệ vì nó có tính ứng dụng cao, và con muốn sau này trở thành kỹ sư IoT — làm thiết bị thông minh và hệ thống tự động hoá giúp cuộc sống tiện hơn.",
+  "Con biết muốn làm được thì không thể lười, nên con sẽ ráng học kỷ luật, rèn tiếng Anh và kỹ năng thực hành để đi đúng hướng.",
+  "Mẹ cứ tin con 1 xíu thôi 😼🩷",
+];
+// =================================================
+
 const $ = (id) => document.getElementById(id);
-const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
-function formatVN(d = new Date()) {
-  const dd = String(d.getDate()).padStart(2, "0");
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const yy = d.getFullYear();
-  return `${dd}/${mm}/${yy}`;
+const gate = $("gate");
+const journey = $("journey");
+const startBtn = $("startBtn");
+
+const bgMusic = $("bgMusic");
+const musicBtn = $("musicBtn");
+
+const marqueeTrack = $("marqueeTrack");
+const gallery = $("gallery");
+const memeList = $("memeList");
+
+const lightbox = $("lightbox");
+const closeLightbox = $("closeLightbox");
+const lightboxContent = $("lightboxContent");
+
+const wishBtn = $("wishBtn");
+const wishText = $("wishText");
+
+// ---------- Helpers ----------
+function stripTime(d) {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0);
 }
-
-function parseLocalDateInput(value) {
-  const [y, m, d] = value.split("-").map(Number);
-  return new Date(y, m - 1, d, 0, 0, 0);
-}
-
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-}
-
-// ===== Hearts =====
-function hearts() {
-  const wrap = $("hearts");
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    const left = Math.random() * 100;
-    const duration = 5 + Math.random() * 4;
-    const size = 10 + Math.random() * 12;
-
-    h.style.left = left + "vw";
-    h.style.animationDuration = duration + "s";
-    h.style.width = size + "px";
-    h.style.height = size + "px";
-    h.style.opacity = 0.35 + Math.random() * 0.35;
-
-    wrap.appendChild(h);
-    setTimeout(() => h.remove(), duration * 1000 + 200);
-  }, 420);
-}
-
-// ===== Typewriter =====
-async function typeWriter(el, text, speed = 18) {
-  el.innerHTML = "";
-  const lines = text.trim().split("\n");
-  for (const line of lines) {
-    for (const ch of line) {
-      el.innerHTML += ch;
-      await sleep(speed);
-    }
-    el.innerHTML += "<br/>";
-    await sleep(speed * 6);
-  }
-}
-
-// ===== Data =====
-const LETTER = `
-Mẹ ơi,
-
-Con không giỏi nói lời tình cảm, nên con chọn cách viết ra ở đây để mẹ đọc.
-
-Con cảm ơn mẹ vì đã luôn ở bên con từ khi con sinh ra đến bây giờ.
-Có những điều trước đây con từng nghĩ là “hiển nhiên”, nhưng càng lớn con càng hiểu:
-đó là sự cố gắng và tình thương của mẹ dành cho con.
-
-Con xin lỗi vì những lúc con khiến mẹ lo hoặc buồn.
-Con đang học cách trưởng thành hơn — biết nghĩ nhiều hơn cho mẹ,
-và biết trân trọng những điều mẹ làm.
-
-Năm nay là một năm rất quan trọng đối với con.
-Con không hứa những điều quá lớn lao,
-nhưng con muốn mẹ yên tâm rằng:
-con đang nghiêm túc với tương lai của mình,
-và con sẽ cố gắng từng ngày.
-
-Con thương mẹ.
-`;
-
-const TIMELINE = [
-  {
-    year: "2008",
-    text: "Ngày con xuất hiện trên đời — con được mẹ ôm vào lòng.",
-  },
-  {
-    year: "2012",
-    text: "Những ngày thơ bé — mẹ luôn là người ở cạnh con nhiều nhất.",
-  },
-  {
-    year: "2016",
-    text: "Con bắt đầu lớn — mẹ vẫn luôn dõi theo con từng chút.",
-  },
-  {
-    year: "2020",
-    text: "Có những lần con bướng — nhưng mẹ vẫn kiên nhẫn với con.",
-  },
-  {
-    year: "2024",
-    text: "Con hiểu mẹ hơn — và bắt đầu biết thương mẹ theo cách của con.",
-  },
-  {
-    year: "2026",
-    text: "Con sắp bước vào kỳ thi tốt nghiệp — con muốn mẹ yên tâm và tự hào.",
-  },
-];
-
-const GALLERY = [
-  "Ảnh 1: Con & Mẹ",
-  "Ảnh 2: Kỷ niệm",
-  "Ảnh 3: Một ngày bình thường",
-  "Ảnh 4: Nụ cười của Mẹ",
-  "Ảnh 5: Chuyến đi",
-  "Ảnh 6: Cột mốc",
-];
-
-// ===== Render timeline =====
-function renderTimeline() {
-  const tl = $("timeline");
-  tl.innerHTML = "";
-  TIMELINE.forEach((item) => {
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `<div class="year">${item.year}</div><p class="txt">${item.text}</p>`;
-    tl.appendChild(div);
-  });
-}
-
-// ===== Render gallery =====
-function renderGallery() {
-  const g = $("gallery");
-  g.innerHTML = "";
-  GALLERY.forEach((cap, i) => {
-    const div = document.createElement("div");
-    div.className = "polaroid";
-    div.style.setProperty("--rot", `${(Math.random() * 8 - 4).toFixed(2)}deg`);
-    div.innerHTML = `<div class="ph">${cap}</div><div class="cap">(#${
-      i + 1
-    })</div>`;
-    g.appendChild(div);
-  });
-}
-
-// ===== Modal (FIX 100%) =====
-function openModal() {
-  $("modal").classList.remove("hidden");
-}
-function closeModal() {
-  $("modal").classList.add("hidden");
-}
-function setupModal() {
-  const modal = $("modal");
-  const card = modal.querySelector(".modal-card");
-  const closeBtn = $("closeModalBtn");
-
-  // X
-  closeBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    closeModal();
-  });
-
-  // click outside
-  modal.addEventListener("click", (e) => {
-    if (!card.contains(e.target)) closeModal();
-  });
-
-  // ESC
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal();
-  });
-}
-
-// ===== Countdown =====
-const DEFAULT_EXAM_DATE = "2026-06-26";
-
-function getExamDate() {
-  return localStorage.getItem("exam_date") || DEFAULT_EXAM_DATE;
-}
-function setExamDate(v) {
-  localStorage.setItem("exam_date", v);
-}
-
-function updateCountdown() {
-  const examStr = getExamDate();
-  const exam = parseLocalDateInput(examStr);
+function nextOccurrence(birthdayStr) {
   const now = new Date();
-
-  const diffMs = exam.getTime() - now.getTime();
-  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-
-  if (diffDays >= 0) {
-    $(
-      "countdown"
-    ).textContent = `Còn ${diffDays} ngày nữa là tới kỳ thi tốt nghiệp 💗`;
-  } else {
-    $(
-      "countdown"
-    ).textContent = `Kỳ thi đã diễn ra rồi — con vẫn sẽ tiếp tục cố gắng 💗`;
-  }
-
-  // progress from 1/1 to exam date
-  const start = new Date(exam.getFullYear(), 0, 1);
-  const total = exam.getTime() - start.getTime();
-  const done = now.getTime() - start.getTime();
-  const pct = clamp((done / total) * 100, 0, 100);
-
-  $("percent").textContent = pct.toFixed(1) + "%";
-  $("fill").style.width = pct + "%";
+  const b = new Date(birthdayStr);
+  const m = b.getMonth();
+  const day = b.getDate();
+  let year = now.getFullYear();
+  let next = new Date(year, m, day, 0, 0, 0, 0);
+  if (next < stripTime(now)) next = new Date(year + 1, m, day, 0, 0, 0, 0);
+  return next;
+}
+function daysBetween(a, b) {
+  const ms = 24 * 60 * 60 * 1000;
+  return Math.max(0, Math.round((stripTime(b) - stripTime(a)) / ms));
+}
+function daysSince(a, b) {
+  const ms = 24 * 60 * 60 * 1000;
+  return Math.max(0, Math.round((stripTime(b) - stripTime(a)) / ms));
 }
 
-// ===== Init =====
-window.addEventListener("DOMContentLoaded", async () => {
-  $("today").textContent = formatVN(new Date());
-
-  hearts();
-  renderTimeline();
-  renderGallery();
-
-  // countdown input
-  $("examDate").value = getExamDate();
-  $("saveDateBtn").addEventListener("click", () => {
-    const v = $("examDate").value;
-    if (!v) return;
-    setExamDate(v);
-    updateCountdown();
-  });
-  updateCountdown();
-  setInterval(updateCountdown, 30_000);
-
-  // open web letter
-  $("openLetterBtn").addEventListener("click", async () => {
-    $("hero").style.display = "none";
-    $("main").classList.remove("hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    await typeWriter($("typed"), LETTER, 18);
-  });
-
-  // modal
-  setupModal();
-  $("openSecretBtn").addEventListener("click", openModal);
+// ---------- Gate ----------
+startBtn?.addEventListener("click", () => {
+  gate.classList.add("hidden");
+  journey.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// ---------- Music ----------
+let musicOn = false;
+musicBtn?.addEventListener("click", async () => {
+  try {
+    if (!musicOn) {
+      await bgMusic.play();
+      musicOn = true;
+      musicBtn.textContent = "⏸ Tắt nhạc";
+    } else {
+      bgMusic.pause();
+      musicOn = false;
+      musicBtn.textContent = "🎵 Bật nhạc";
+    }
+  } catch {
+    alert("Thiết bị đang chặn phát nhạc 😭 Mẹ bấm lại giúp con nha.");
+  }
+});
+
+// ---------- Marquee ----------
+function renderMarquee() {
+  const items = [...WISHES, ...WISHES];
+  marqueeTrack.innerHTML = items
+    .map((t) => `<div class="pill">💗 ${t}</div>`)
+    .join("");
+}
+
+const photoFilm = document.getElementById("photoFilm");
+const videoRow = document.getElementById("videoRow");
+
+// tách danh sách
+const PHOTOS = Array.from(
+  { length: 20 },
+  (_, i) => `assets/images/${i + 1}.jpg`
+);
+const VIDEOS = Array.from(
+  { length: 10 },
+  (_, i) => `assets/videos/${i + 1}.mp4`
+);
+
+// ===== ẢNH: film cuốn + auto 3s/ảnh =====
+let filmIndex = 0;
+let filmTimer = null;
+
+function renderPhotoFilm() {
+  if (!photoFilm) return;
+
+  // render ảnh (nhân đôi để cuốn vô tận mượt)
+  const items = [...PHOTOS, ...PHOTOS];
+  photoFilm.innerHTML = items
+    .map(
+      (src, idx) => `
+    <div class="film-item" data-type="image" data-src="${src}">
+      <img loading="lazy" src="${src}" alt="Ảnh ${idx + 1}">
+    </div>
+  `
+    )
+    .join("");
+
+  // click phóng to
+  photoFilm.querySelectorAll(".film-item").forEach((el) => {
+    el.addEventListener("click", () => {
+      openLightbox({ type: "image", src: el.dataset.src });
+    });
+  });
+
+  startFilmAuto();
+}
+
+function startFilmAuto() {
+  // auto dịch theo từng ảnh: 3s/1 ảnh
+  stopFilmAuto();
+
+  const gap = 12;
+  const itemW = photoFilm.querySelector(".film-item")?.offsetWidth || 220;
+  const step = itemW + gap;
+
+  filmTimer = setInterval(() => {
+    filmIndex++;
+    photoFilm.style.transition = "transform 0.8s ease";
+    photoFilm.style.transform = `translateX(${-filmIndex * step}px)`;
+
+    // reset mượt khi đi hết nửa (vì có nhân đôi)
+    if (filmIndex >= PHOTOS.length) {
+      setTimeout(() => {
+        photoFilm.style.transition = "none";
+        filmIndex = 0;
+        photoFilm.style.transform = "translateX(0px)";
+      }, 900);
+    }
+  }, 3000);
+
+  // chạm vào thì tạm dừng (mẹ xem rõ)
+  const wrap = photoFilm.parentElement;
+  wrap?.addEventListener("touchstart", stopFilmAuto, { passive: true });
+  wrap?.addEventListener("touchend", startFilmAuto, { passive: true });
+}
+
+function stopFilmAuto() {
+  if (filmTimer) {
+    clearInterval(filmTimer);
+    filmTimer = null;
+  }
+}
+
+// ===== VIDEO: hàng ngang, lướt & bấm xem =====
+function renderVideoRow() {
+  if (!videoRow) return;
+
+  videoRow.innerHTML = VIDEOS.map(
+    (src, i) => `
+    <div class="album-item is-visible" data-type="video" data-src="${src}">
+      <video class="album-thumb" src="${src}" muted playsinline preload="metadata"></video>
+    </div>
+  `
+  ).join("");
+
+  videoRow.querySelectorAll(".album-item").forEach((el) => {
+    el.addEventListener("click", () => {
+      openLightbox({ type: "video", src: el.dataset.src });
+    });
+  });
+}
+
+// ---------- Lightbox ----------
+function openLightbox(item) {
+  lightbox.classList.remove("hidden");
+  if (item.type === "image")
+    lightboxContent.innerHTML = `<img src="${item.src}" alt="Ảnh" />`;
+  else
+    lightboxContent.innerHTML = `<video src="${item.src}" controls autoplay playsinline></video>`;
+}
+function closeLb() {
+  lightbox.classList.add("hidden");
+  lightboxContent.innerHTML = "";
+}
+closeLightbox?.addEventListener("click", closeLb);
+lightbox?.addEventListener("click", (e) => {
+  if (e.target === lightbox) closeLb();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeLb();
+});
+
+// ---------- Memes ----------
+function renderMemes() {
+  memeList.innerHTML = MEMES.map((t) => `<div class="meme">✨ ${t}</div>`).join(
+    ""
+  );
+}
+
+// ---------- Counters ----------
+function renderCounters() {
+  const now = new Date();
+  const birthMe = new Date(FAMILY.me.birthday);
+
+  $("daysWithMom").textContent = `${daysSince(birthMe, now)}`;
+  $("bdayMe").textContent = `${daysBetween(
+    now,
+    nextOccurrence(FAMILY.me.birthday)
+  )}`;
+  $("bdayMom").textContent = `${daysBetween(
+    now,
+    nextOccurrence(FAMILY.mom.birthday)
+  )}`;
+  $("bdaySis").textContent = `${daysBetween(
+    now,
+    nextOccurrence(FAMILY.sis.birthday)
+  )}`;
+  $("bdayBro").textContent = `${daysBetween(
+    now,
+    nextOccurrence(FAMILY.bro.birthday)
+  )}`;
+
+  $("gradCountdown").textContent = FAMILY.gradDate
+    ? `${daysBetween(now, new Date(FAMILY.gradDate))}`
+    : `Chưa chốt`;
+}
+
+// ================== Wish Typewriter ==================
+let typing = false;
+async function typeWriteParagraphs(paras, el) {
+  if (typing) return;
+  typing = true;
+
+  el.innerHTML = ""; // clear
+  const cursor = document.createElement("span");
+  cursor.className = "cursor";
+
+  for (let p of paras) {
+    const line = document.createElement("div");
+    line.style.marginBottom = "10px";
+    el.appendChild(line);
+
+    for (let i = 0; i < p.length; i++) {
+      line.textContent += p[i];
+      el.appendChild(cursor);
+      await new Promise((r) => setTimeout(r, 18)); // tốc độ gõ
+    }
+  }
+
+  // done: giữ cursor nhấp nháy
+  el.appendChild(cursor);
+  typing = false;
+}
+
+wishBtn?.addEventListener("click", () => {
+  typeWriteParagraphs(WISH_PARAS, wishText);
+  wishBtn.disabled = true;
+  wishBtn.textContent = "💗 Con đang nói nè...";
+});
+
+// ================== FX: sparkle dots + petals ==================
+function mountFXCanvas() {
+  const c = document.createElement("canvas");
+  c.id = "fxCanvas";
+  document.body.prepend(c);
+  const ctx = c.getContext("2d");
+
+  let w = 0,
+    h = 0;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+
+  function resize() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    c.width = Math.floor(w * dpr);
+    c.height = Math.floor(h * dpr);
+    c.style.width = w + "px";
+    c.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  const dots = []; // ⭐ dấu chấm lấp lánh
+  const petals = []; // 🌸 cánh hoa
+
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  const DOT_COUNT = 75; // nhiều nhưng nhỏ
+  const PETAL_COUNT = 12; // ít để không rối
+
+  function spawnDot() {
+    dots.push({
+      x: rand(0, w),
+      y: rand(-h, h),
+      r: rand(0.8, 1.9), // nhỏ xíu như dấu chấm
+      vy: rand(0.15, 0.45),
+      tw: rand(0.01, 0.03),
+      a: rand(0.2, 0.7),
+      hue: rand(0, 1) < 0.75 ? "255,230,245" : "255,155,208",
+    });
+  }
+
+  function spawnPetal() {
+    petals.push({
+      x: rand(-40, w + 40),
+      y: rand(-80, -20),
+      r: rand(3.2, 6.8), // to nhỏ tự nhiên
+      rot: rand(0, Math.PI * 2),
+      rotSpd: rand(-0.015, 0.015),
+      vx: rand(-0.12, 0.12),
+      vy: rand(0.25, 0.65),
+      sway: rand(0.8, 1.4),
+      t: 0,
+      life: rand(900, 1600),
+    });
+  }
+
+  for (let i = 0; i < DOT_COUNT; i++) spawnDot();
+  for (let i = 0; i < PETAL_COUNT; i++) spawnPetal();
+
+  function drawDot(d, t) {
+    const twinkle = 0.35 + 0.65 * Math.sin(t * d.tw);
+    const alpha = d.a * twinkle;
+
+    // dot
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(${d.hue},${alpha})`;
+    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // glow nhẹ
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(${d.hue},${alpha * 0.25})`;
+    ctx.arc(d.x, d.y, d.r * 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+
+    ctx.globalAlpha = 0.55; // giảm để không che chữ
+    const grad = ctx.createLinearGradient(0, -p.r * 3, 0, p.r * 3);
+    grad.addColorStop(0, "rgba(255,155,208,0.85)");
+    grad.addColorStop(1, "rgba(255,79,163,0.35)");
+
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.r * 1.1, p.r * 2.8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, w, h);
+    const t = Date.now();
+
+    // sparkle dots
+    for (let i = dots.length - 1; i >= 0; i--) {
+      const d = dots[i];
+      d.y += d.vy;
+      drawDot(d, t);
+
+      if (d.y > h + 40) {
+        d.y = rand(-120, -20);
+        d.x = rand(0, w);
+      }
+    }
+
+    // petals
+    for (let i = petals.length - 1; i >= 0; i--) {
+      const p = petals[i];
+      p.t++;
+      p.rot += p.rotSpd;
+      p.x += p.vx + Math.sin((p.t / 90) * p.sway) * 0.18;
+      p.y += p.vy;
+
+      drawPetal(p);
+
+      if (p.y > h + 100 || p.t > p.life) {
+        petals.splice(i, 1);
+        spawnPetal();
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+}
+// =========================================================
+
+// Init
+renderMarquee();
+renderPhotoFilm();
+renderVideoRow();
+renderMemes();
+renderCounters();
+mountFXCanvas();
+setInterval(renderCounters, 60 * 1000);
+
+
