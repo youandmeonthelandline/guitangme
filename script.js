@@ -3,7 +3,7 @@ const FAMILY = {
   me: { name: "Em Bí", birthday: "2008-02-19" },
   mom: { name: "Mẹ", birthday: "1985-07-09" },
   sis: { name: "Chị", birthday: "2005-05-13" },
-  bro: { name: "Em trai", birthday: "2010-01-12" },
+  bro: { name: "Em Boy", birthday: "2010-01-12" },
   gradDate: null,
 };
 
@@ -449,5 +449,6 @@ renderMemes();
 renderCounters();
 mountFXCanvas();
 setInterval(renderCounters, 60 * 1000);
+
 
 
