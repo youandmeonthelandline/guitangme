@@ -3,192 +3,182 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bức thư dành riêng cho Mẹ 💗</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Marck+Script&display=swap"
-      rel="stylesheet"
-    />
-
+    <title>Món quà nhỏ gửi Mẹ 💗</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <!-- hiệu ứng tim -->
-    <div id="hearts"></div>
+    <!-- FX canvas + glow will be injected by JS -->
 
-    <!-- HERO -->
-    <header class="hero" id="hero">
-      <div class="hero-card">
-        <div class="badge">💌 Bức thư dành riêng cho Mẹ</div>
+    <!-- Music -->
+    <audio id="bgMusic" loop>
+      <source src="assets/audio/nhac-cute.mp3" type="audio/mpeg" />
+    </audio>
 
-        <h1>Gửi Mẹ của con</h1>
-        <p class="sub">
-          Con không giỏi nói lời tình cảm…<br />
-          nên con viết tất cả ở đây.
-        </p>
-
-        <div class="hero-actions">
-          <button class="btn primary" id="openLetterBtn" type="button">
-            Mẹ bấm vào đây nhé 💗
-          </button>
-        </div>
-
-        <p class="note">(Mẹ kéo xuống xem từng phần nha 🫶)</p>
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Gửi Mẹ 💗</span>
       </div>
+
+      <button id="musicBtn" class="btn btn-soft" type="button">
+        🎵 Bật nhạc
+      </button>
     </header>
 
-    <!-- MAIN -->
-    <main id="main" class="hidden">
-      <!-- LETTER -->
-      <section class="section">
-        <div class="section-title">
-          <h2>💌 Một bức thư nhỏ</h2>
-          <p>Con viết cho mẹ bằng tất cả sự biết ơn.</p>
-        </div>
-
-        <div class="paper">
-          <div class="paper-head">
-            <span>Gửi mẹ,</span>
-            <span id="today"></span>
-          </div>
-
-          <div class="handwrite" id="typed"></div>
-
-          <div class="sign">
-            <p>Con của mẹ,</p>
-            <p class="sig">Ngân Hoàng</p>
-            <p class="mini">Sinh ngày 19/02/2008</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- TIMELINE -->
-      <section class="section alt">
-        <div class="section-title">
-          <h2>🕰️ Hành trình của Mẹ & Con</h2>
-          <p>Mỗi mốc thời gian là một điều con luôn nhớ.</p>
-        </div>
-
-        <div class="timeline" id="timeline"></div>
-      </section>
-
-      <!-- GALLERY -->
-      <section class="section">
-        <div class="section-title">
-          <h2>📸 Album kỷ niệm</h2>
-          <p>Con sẽ thay ảnh thật sau (giờ là khung để mẹ xem bố cục trước).</p>
-        </div>
-
-        <div class="grid" id="gallery"></div>
-
-        <p class="hint">
-          ✨ Khi có ảnh, em chỉ cần gửi ảnh cho anh hoặc thay vào folder
-          <b>assets/photos</b>.
-        </p>
-      </section>
-
-      <!-- MAJOR -->
-      <section class="section alt">
-        <div class="section-title">
-          <h2>🎓 Nguyện vọng của con</h2>
-          <p>Con muốn mẹ yên tâm rằng con đang nghiêm túc.</p>
-        </div>
-
-        <div class="card">
-          <h3>Công nghệ Điện tử – Viễn thông (Đà Lạt)</h3>
-
-          <p class="text">
-            Nguyện vọng của em là theo học ngành
-            <b>Công nghệ Điện tử – Viễn thông</b> tại trường ở <b>Đà Lạt</b>. Em
-            chọn ngành này vì yêu thích công nghệ và mong muốn được học một lĩnh
-            vực có tính ứng dụng cao. Mục tiêu nghề nghiệp của em là trở thành
-            <b>kỹ sư IoT (Internet of Things)</b>, phát triển các thiết bị thông
-            minh và hệ thống tự động hóa phục vụ đời sống. Em xác định đây là
-            lựa chọn nghiêm túc, vì vậy em sẽ học tập kỷ luật, rèn tiếng Anh và
-            kỹ năng thực hành để có thể đi đúng hướng và tạo ra giá trị trong
-            tương lai.
-          </p>
-
-          <div class="pills">
-            <span class="pill">📡 Điện tử</span>
-            <span class="pill">🌐 Viễn thông</span>
-            <span class="pill">🤖 IoT</span>
-            <span class="pill">🧠 Tự động hóa</span>
-            <span class="pill">🇬🇧 Tiếng Anh</span>
-            <span class="pill">📚 Kỷ luật</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- COUNTDOWN -->
-      <section class="section">
-        <div class="section-title">
-          <h2>⏳ Đếm ngược kỳ thi tốt nghiệp</h2>
-          <p>Mỗi ngày con sẽ cố gắng hơn một chút.</p>
-        </div>
-
-        <div class="card center">
-          <div class="row">
-            <label for="examDate"><b>📅 Ngày thi:</b></label>
-            <input type="date" id="examDate" />
-            <button class="btn small" id="saveDateBtn" type="button">
-              Lưu
-            </button>
-          </div>
-
-          <div class="countdown" id="countdown"></div>
-
-          <div class="progressBox">
-            <div class="progressTop">
-              <span>Tiến độ</span>
-              <span id="percent">0%</span>
+    <main class="container">
+      <!-- Gate -->
+      <section id="gate" class="gate">
+        <div class="card letter">
+          <div class="letter-header">
+            <div class="stamp">💌</div>
+            <div>
+              <h1 class="title">Mẹ ơi, con có cái này…</h1>
+              <p class="subtitle">Đọc xíu thôi rồi bấm nút nha 😼</p>
             </div>
-            <div class="bar">
-              <div class="fill" id="fill"></div>
-            </div>
-            <p class="mini2">Hôm nay con đã cố gắng thêm 1 chút rồi 💗</p>
           </div>
-        </div>
-      </section>
 
-      <!-- SECRET -->
-      <section class="section alt">
-        <div class="section-title">
-          <h2>💗 Một điều con giấu ở đây</h2>
-          <p>Chỉ dành riêng cho mẹ.</p>
-        </div>
+          <div class="letter-body">
+            <p>Mẹ đọc thư giấy rồi đúng hông…</p>
+            <p>
+              Con không giỏi nói lời tình cảm đâu, nên con làm cái web nhỏ này
+              để gửi mẹ một ít thứ dễ thương.
+            </p>
+            <p>
+              Trong này có lời chúc, lời cảm ơn, ảnh/video gia đình mình, meme
+              cute, và một bất ngờ nhỏ nữa.
+            </p>
+            <p class="note">
+              (Có nhạc nha. Nếu mẹ đang ở đông người thì nhớ mở nhỏ nha kẻo mẹ
+              ngại 😼)
+            </p>
+          </div>
 
-        <div class="center">
-          <button class="btn primary" id="openSecretBtn" type="button">
-            Mẹ bấm vào đây…
+          <button id="startBtn" class="btn btn-primary" type="button">
+            ✨ Chấp nhận hành trình ký ức
           </button>
         </div>
       </section>
 
-      <!-- FOOTER -->
-      <footer class="footer">
-        <p>Con cảm ơn mẹ vì đã là mẹ của con 🌷</p>
-        <p class="mini">Trang web này được làm bởi: Ngân Hoàng 💗</p>
-      </footer>
+      <!-- Journey -->
+      <section id="journey" class="journey hidden">
+        <!-- Marquee wishes -->
+        <section class="card section">
+          <h2 class="h2">📨 Lời chúc & cảm ơn</h2>
+
+          <div class="marquee">
+            <div class="marquee-track" id="marqueeTrack"></div>
+          </div>
+
+          <p class="small">(Nếu mẹ cười thì coi như con thắng 😼)</p>
+        </section>
+
+        <!-- Album -->
+        <section class="card section">
+          <h2 class="h2">📷 Album ký ức</h2>
+
+          <h3 class="h3">📸 Ảnh (phim cuốn)</h3>
+          <div class="film-wrap">
+            <div class="film" id="photoFilm"></div>
+          </div>
+
+          <h3 class="h3" style="margin-top: 14px">🎬 Video</h3>
+          <div class="hscroll" id="videoRow"></div>
+        </section>
+
+        <!-- Memes -->
+        <section class="card section">
+          <h2 class="h2">🤣 Meme dễ thương</h2>
+          <div class="meme-list" id="memeList"></div>
+        </section>
+
+        <!-- Counters -->
+        <section class="card section">
+          <h2 class="h2">⏳ Team đếm ngày của gia đình mình</h2>
+
+          <div class="counter-grid">
+            <div class="counter">
+              <div class="counter-title">🧸 Con đã ở bên mẹ được</div>
+              <div class="counter-value" id="daysWithMom">…</div>
+              <div class="counter-sub">ngày rồi đó 😳</div>
+            </div>
+
+            <div class="counter">
+              <div class="counter-title">🎂 Sinh nhật con (19/02/2008)</div>
+              <div class="counter-value" id="bdayMe">…</div>
+              <div class="counter-sub">ngày nữa</div>
+            </div>
+
+            <div class="counter">
+              <div class="counter-title">🎀 Sinh nhật mẹ (09/07/1985)</div>
+              <div class="counter-value" id="bdayMom">…</div>
+              <div class="counter-sub">ngày nữa</div>
+            </div>
+
+            <div class="counter">
+              <div class="counter-title">🌷 Sinh nhật chị (13/05/2005)</div>
+              <div class="counter-value" id="bdaySis">…</div>
+              <div class="counter-sub">ngày nữa</div>
+            </div>
+
+            <div class="counter">
+              <div class="counter-title">🐣 Sinh nhật em trai (12/01/2010)</div>
+              <div class="counter-value" id="bdayBro">…</div>
+              <div class="counter-sub">ngày nữa</div>
+            </div>
+
+            <div class="counter">
+              <div class="counter-title">🎓 Thi tốt nghiệp của con</div>
+              <div class="counter-value" id="gradCountdown">Chưa chốt</div>
+              <div class="counter-sub">biết ngày là con cập nhật liền 😼</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Dreams -->
+        <section class="card section">
+          <h2 class="h2">🌟 Nguyện vọng của Em Bí</h2>
+
+          <div class="dream">
+            <button id="wishBtn" class="btn btn-primary btn-wish" type="button">
+              💗 Mẹ ấn vào đây giúp con
+            </button>
+
+            <div id="wishText" class="wish-text" aria-live="polite"></div>
+
+            <p class="hint">(Con hứa đoạn này không dài đâu… chắc vậy 😼)</p>
+          </div>
+        </section>
+
+        <!-- End -->
+        <section class="card section end">
+          <h2 class="h2">💗 Lời kết</h2>
+          <p>Cảm ơn mẹ vì đã luôn ở đó với con.</p>
+          <p>Chúc mẹ luôn khỏe, bớt mệt, và vui nhiều hơn.</p>
+          <p class="signature">— Em Bí 🐣</p>
+        </section>
+
+        <footer class="footer">
+          <span>Made by Em Bí 🩷</span>
+        </footer>
+      </section>
     </main>
 
-    <!-- MODAL -->
-    <div class="modal hidden" id="modal">
-      <div class="modal-card" role="dialog" aria-modal="true">
-        <button class="x" id="closeModalBtn" type="button">✕</button>
-        <h3>Mẹ ơi…</h3>
-        <p>
-          Con thật sự cảm ơn mẹ. Nếu mẹ mệt quá, mẹ dựa vào con một chút cũng
-          được. Con sẽ cố gắng để mẹ yên tâm hơn mỗi ngày.
-        </p>
-        <p class="love">Con thương mẹ nhiều 💗</p>
-        <p class="tiny">(Bấm ngoài khung / bấm X / nhấn ESC để tắt)</p>
-      </div>
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true">
+      <button
+        id="closeLightbox"
+        class="lightbox-close"
+        type="button"
+        aria-label="Đóng"
+      >
+        ✕
+      </button>
+      <div class="lightbox-content" id="lightboxContent"></div>
     </div>
 
     <script src="script.js"></script>
   </body>
 </html>
+
