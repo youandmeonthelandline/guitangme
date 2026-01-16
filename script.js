@@ -1,8 +1,8 @@
 // ================== SETTINGS ==================
 const FAMILY = {
   me: { name: "Em Bí", birthday: "2008-02-19" },
-  mom: { name: "Mẹ", birthday: "1985-07-09" },
-  sis: { name: "Chị", birthday: "2005-05-13" },
+  mom: { name: "Mẹ Thim", birthday: "1985-07-09" },
+  sis: { name: "Chị Cún", birthday: "2005-05-13" },
   bro: { name: "Em Boy", birthday: "2010-01-12" },
   gradDate: null,
 };
@@ -11,11 +11,11 @@ const WISHES = [
   "Con cảm ơn mẹ vì luôn lo cho con 💗",
   "Chúc mẹ luôn khỏe mạnh và bình an ✨",
   "Mẹ đừng mệt quá nữa nha 🥺",
-  "Con không nói nhiều nhưng con biết ơn mẹ lắm 😼",
-  "Nhà mình sẽ ổn màaaa 💗",
+  "Chúng con yêu mẹ nhiều<33",
+  "Nhà mình luôn vui tươi 💗",
   "Mẹ cứ yên tâm, con đang cố gắng nè",
   "Cười lên nha mẹ 😆",
-  "Mẹ là số 1 (con ngại nói trực tiếp) 😳",
+  "Mẹ là số 1😳",
 ];
 
 const GALLERY_ITEMS = [
@@ -31,18 +31,18 @@ const GALLERY_ITEMS = [
 
 const MEMES = [
   "Mẹ đọc tới đây mà không cười là con buồn đó nha 😼",
-  "Con: không giỏi nói tình cảm. Cũng là con: làm web nguyên cái 😭💗",
+  "Con: luôn bướng hong chịu nghe lời. Cũng là con: thức đêm làm web 😭💗",
   "Mẹ mà khen đẹp là con sẽ… ngại đó 😳",
-  "Nếu mẹ thấy dễ thương thì đúng rồi 😌",
+  "Em Miu cũng yêu mẹ rất nhiều",
 ];
 
 // Text nguyện vọng (typewriter)
 const WISH_PARAS = [
-  "Con đang nghiêm túc nghĩ về tương lai rồi nha (đừng bất ngờ).",
-  "Nguyện vọng của con là theo học ngành Công nghệ Điện tử – Viễn thông tại trường ở Đà Lạt.",
-  "Con thích công nghệ vì nó có tính ứng dụng cao, và con muốn sau này trở thành kỹ sư IoT — làm thiết bị thông minh và hệ thống tự động hoá giúp cuộc sống tiện hơn.",
+  "Đã đến lúc con suy nghĩ về tương lai của mình rồi;-;",
+  "Nguyện vọng của con là theo học ngành Công nghệ Điện tử – Viễn thông ở trường đại học Đà Lạt. Cách đường kính khoảng 50km với mẹ thoi, nên mẹ hong cần lo đâu",
+  "Con thích công nghệ vì nó có tính ứng dụng cao, và con muốn sau này trở thành kỹ sư IoT — làm thiết bị thông minh và hệ thống tự động hoá giúp cuộc sống tiện hơn. Và con muốn làm linh kiện điện tử đó, dù chưa thực hành bao giờ nhưng con sẽ làm được thôi hehe.",
   "Con biết muốn làm được thì không thể lười, nên con sẽ ráng học kỷ luật, rèn tiếng Anh và kỹ năng thực hành để đi đúng hướng.",
-  "Mẹ cứ tin con 1 xíu thôi 😼🩷",
+  "Mẹ cứ tin ở con nhé! 😼🩷",
 ];
 // =================================================
 
@@ -304,7 +304,7 @@ async function typeWriteParagraphs(paras, el) {
 wishBtn?.addEventListener("click", () => {
   typeWriteParagraphs(WISH_PARAS, wishText);
   wishBtn.disabled = true;
-  wishBtn.textContent = "💗 Con đang nói nè...";
+  wishBtn.textContent = "💗 Con có điều muốn nói...><";
 });
 
 // ================== FX: sparkle dots + petals ==================
@@ -449,6 +449,7 @@ renderMemes();
 renderCounters();
 mountFXCanvas();
 setInterval(renderCounters, 60 * 1000);
+
 
 
 
